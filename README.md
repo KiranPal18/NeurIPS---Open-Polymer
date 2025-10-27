@@ -1,58 +1,86 @@
 ## Polymer Property Prediction using Molecular Feature Engineering and Machine Learning
 
-This repository presents a solution for predicting polymer properties using a combination of **molecular feature engineering** and **machine learning**.  
-The work was developed for the **NeurIPS 2025 Open Polymer Prediction Challenge**, aiming to improve predictive accuracy through chemical feature extraction and ensemble modeling.
+This repository contains machine learning pipelines for predicting polymer properties from molecular structure data.  
+It was developed for the **NeurIPS 2025 Open Polymer Prediction Challenge**, focusing on building interpretable and high-performance models using molecular descriptors, graph features, and ensemble learning techniques.
 
 ---
 
 ## Project Overview
 
-Polymer property prediction requires transforming raw molecular data into meaningful numerical representations.  
-Traditional models often fail because raw identifiers, such as SMILES, do not reflect molecular structure or chemical behavior.  
-This project introduces a structured workflow that converts molecular representations into feature-rich vectors and applies advanced machine learning algorithms for regression-based property prediction.
+Polymer property prediction requires converting molecular data into numerical representations that capture both chemical structure and physical behavior.  
+Traditional identifiers such as SMILES strings lack structural context, limiting predictive accuracy.  
+This project addresses that by integrating **feature engineering**, **graph modeling**, and **ensemble regression** to predict polymer properties such as Tg, Tc, FFV, Rg, and density.
 
-All implementation details are provided in the notebook `polymer-17.ipynb`, which includes preprocessing, feature computation, model training, and evaluation.
+The repository includes two main implementations:
+
+1. **`polymer-17.ipynb`**  
+   - Complete feature-engineered ensemble pipeline for polymer property prediction.  
+   - Combines RDKit descriptors, Morgan fingerprints, and graph features.  
+   - Uses XGBoost, LightGBM, and CatBoost models with Optuna optimization.  
+
+2. **`polymer_model_ensemble.py`**  
+   - Ensemble model combining **XGBoost** and **LightGBM** regressors optimized via **Optuna**.  
+   - Uses Mordred and RDKit features with automated preprocessing.  
+   - Integrates descriptor filtering, graph topology computation, and feature scaling.  
+
+---
+
+## Dataset
+
+The dataset used in this project is provided by the **AI-OF-GOD-4 Kaggle competition**.  
+You can access it directly here:  
+🔗 [NeurIPS - Open Polymer Prediction 2025](https://www.kaggle.com/competitions/neurips-open-polymer-prediction-2025/data))
 
 ---
 
 ## Core Components
 
-### 1. Feature Engineering
-- Extracted molecular descriptors and physicochemical features using **RDKit**.  
-- Generated **Morgan fingerprints** to represent substructural similarities.  
-- Modeled molecular graphs with **NetworkX** to capture topological relationships.  
-- Merged descriptor, fingerprint, and graph features into a comprehensive feature set.
+### 1. Molecular Feature Engineering
+- Extracted **physicochemical and structural descriptors** using RDKit.  
+- Computed **Mordred descriptors** for advanced molecular representation.  
+- Generated **Morgan fingerprints** for substructure encoding.  
+- Derived **graph-based topology features** (diameter, path length, cycle count) via NetworkX.  
 
-### 2. Model Development
-- Evaluated multiple ensemble algorithms: **XGBoost**, **LightGBM**, **CatBoost**, **Random Forest**, and **Extra Trees**.  
-- Applied **Optuna** for hyperparameter optimization targeting **Mean Absolute Error (MAE)**.  
-- Used **K-Fold Cross-Validation** for model validation and reliability testing.  
-- Final predictions were generated from the best-performing configuration.
+### 2. Ensemble Modeling
+- Implemented **XGBoost**, **LightGBM**, and **CatBoost** models for regression.  
+- Applied **Optuna** for hyperparameter optimization to minimize MAE.  
+- Combined predictions through weighted ensembling to improve robustness.  
+- Used **K-Fold Cross-Validation** for model validation.
 
-### 3. Reproducibility and Structure
-- Modular design separating data preparation, feature generation, and model training.  
-- Includes `requirements.txt` for reproducible setup in both local and Kaggle environments.
+### 3. Reproducibility and Modularity
+- Structured scripts for reproducible pipelines.  
+- Includes `requirements.txt` for consistent dependency setup.  
+- Compatible with both **Kaggle** and **local Jupyter environments**.  
 
 ---
 
 ## Technology Stack
 
 - **Language:** Python  
-- **Libraries:** RDKit, scikit-learn, XGBoost, LightGBM, CatBoost, Optuna, NetworkX, Pandas, NumPy, Matplotlib, Seaborn  
-- **Platform:** Kaggle / Jupyter Notebook  
+- **Libraries:** RDKit, Mordred, scikit-learn, XGBoost, LightGBM, CatBoost, Optuna, Pandas, NumPy, Matplotlib, Seaborn  
+- **Platform:** Kaggle Notebook  
+
+---
+
+## Results
+
+-`polymer-17.ipynb` (Feature-engineered ensemble model with full molecular descriptors) **0.84**      
+-`polymer_model_ensemble.py` (XGBoost–LightGBM ensemble with Optuna tuning) **0.74**
 
 ---
 
 ## Learnings
 
-- Understood the impact of feature representation on model accuracy.  
-- Learned systematic model selection and hyperparameter optimization.  
-- Built modular and reproducible ML pipelines for scientific datasets.  
-- Improved skills in interpreting and visualizing chemical–ML relationships.
+- Advanced feature engineering significantly improves model accuracy.  
+- Model ensembling enhances prediction stability across multiple polymer properties.  
+- Feature importance analysis aids interpretability in chemistry–ML workflows.  
+- Modular pipelines make reproduction and future extension straightforward.
+
+---
 
 ## Outcome
 
-The project demonstrates that domain-aware feature engineering significantly improves predictive accuracy in polymer informatics.  
-The resulting pipeline serves as a reliable baseline for further research in molecular and materials property prediction.
+The project demonstrates that integrating **domain-specific chemistry features** with **ensemble machine learning** leads to more accurate polymer property predictions.  
+It serves as a baseline framework for future polymer informatics and molecular property prediction challenges.
 
 ---
